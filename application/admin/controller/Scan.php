@@ -47,6 +47,15 @@ class Scan extends Controller
         return exit($result);
     }
 
+    public function sign(){
+        $pk =trim(input('post.pk'));
+        $userCode =trim(input('post.userCode'));
+        $request = new HttpRequestUtil();
+        $post_data = array("pk"=>$pk,"userCode"=>$userCode);
+        $result = $request->httpJsonPost(TMS_SERVER_URL . "order/signInv",json_encode($post_data));
+        return exit($result);
+    }
+
     /**
      * 发送评价功能.
      */

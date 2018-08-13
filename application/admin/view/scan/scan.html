@@ -106,7 +106,13 @@
             needResult: 1,
             scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
             success: function (res) {
-                getBarCodeData(JSON.parse(res.resultStr).pk);
+                var data = JSON.parse(res.resultStr);
+                alert(data.type);
+                if(data.type==1){
+                    getBarCodeData(data.pk);
+                }else{
+                    alert("请扫描正确的货码")
+                }
             }
         });
     }
@@ -162,12 +168,12 @@
     }
     /* 签收接口*/
     function  signGoods() {
-        $.post("/shouhuo/public/admin/scan/sendRemark", {
+        $.post("/shouhuo/public/admin/scan/sign", {
             'pk': sessionStorage.getItem("pk"),
             'userCode': localStorage.getItem("username")
         }, function (resp) {
-           /* alert(JSON.stringify(resp));
-            if (resp.success == 1) {*/
+            alert(JSON.stringify(resp));
+          //  if (resp.success == 1) {
                 showPanel();
            // }
         })
