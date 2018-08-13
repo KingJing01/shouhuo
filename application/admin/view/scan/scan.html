@@ -30,7 +30,7 @@
 </div></div><div class="sm_cell"><div class="sm_cell_img"><span class="fa fa-list fa-lg"></div><div class="sm_cell_text"><p>1件/60000.0000千克/60.00立方米</p></div></div></div> -->
     </div>
      <div class="comment_div">
-        <a href="javascript:showPanel()" class="sm_btn btn_comment">签&emsp; 收</a>
+        <a href="javascript:signGoods()" class="sm_btn btn_comment">签&emsp; 收</a>
         <a href="javascript:enterScan()" class="sm_btn btn_scan">继续扫码</a>
     </div>
     <img src="__STATIC__/images/picture_car.png" id="car_img" onclick="return false">
@@ -160,13 +160,27 @@
         initRaty();
         sessionStorage.setItem("comment","");
     }
-
+    /* 签收接口*/
+    function  signGoods() {
+        $.post("/shouhuo/public/admin/scan/sendRemark", {
+            'pk': sessionStorage.getItem("pk"),
+            'userCode': localStorage.getItem("username")
+        }, function (resp) {
+           /* alert(JSON.stringify(resp));
+            if (resp.success == 1) {*/
+                showPanel();
+           // }
+        })
+    }
+    /*发布评价*/
     function sendComment() {
         var remark = $("#comment_textarea").val();
+        var average = $('#star').raty('getScore');
         $.post("/shouhuo/public/admin/scan/sendRemark", {
             'remark': remark,
             'pk': sessionStorage.getItem("pk"),
-            'userCode': localStorage.getItem("username")
+            'userCode': localStorage.getItem("username"),
+            'average':average
         }, function (resp) {
             if (resp.success == 1) {
                 var $toast = $('#toast');

@@ -54,9 +54,10 @@ class Scan extends Controller
         $pk =trim(input('post.pk'));
         $userCode =trim(input('post.userCode'));
         $remark = trim(input('post.remark'));
+        $average = trim(input('post.average'));
         $request = new HttpRequestUtil();
-        $post_data = array("pk"=>$pk,"userCode"=>$userCode,"remark",$remark);
-        $result = $request->httpJsonPost(TMS_SERVER_URL . "order/signInv",json_encode($post_data));
+        $post_data = array("pk"=>$pk,"userCode"=>$userCode,"scorereason"=>$remark,'average'=>$average);
+        $result = $request->httpJsonPost(TMS_SERVER_URL . "order/clientAppraisal",json_encode($post_data));
         return exit($result);
     }
 
