@@ -107,7 +107,6 @@
             scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
             success: function (res) {
                 var data = JSON.parse(res.resultStr);
-                alert(data.type);
                 if(data.type==1){
                     getBarCodeData(data.pk);
                 }else{
@@ -172,10 +171,12 @@
             'pk': sessionStorage.getItem("pk"),
             'userCode': localStorage.getItem("username")
         }, function (resp) {
-            alert(JSON.stringify(resp));
-          //  if (resp.success == 1) {
+            var data = JSON.parse(resp);
+           if (data.success == 1) {
                 showPanel();
-           // }
+          }else{
+               alert(data.message);
+           }
         })
     }
     /*发布评价*/
