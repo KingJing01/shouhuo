@@ -57,12 +57,12 @@
             $("#iosDialog2").show();
             return;
         }
-        $.post('/shouhuo/public/admin/account/dologin', {
+        $.post('/admin/account/dologin', {
             'username': username,
             'pwd': pwd,
         }, function (res) {
            if (res.success == 1) {
-               window.location.href="/shouhuo/public/admin/scan/scanEntry";
+               window.location.href="/admin/scan/scanEntry";
             } else {
                $("#alert_info").html(res.message);
                $("#iosDialog2").show();
@@ -78,7 +78,7 @@
         formData.append("username",username);
        $.ajax({
          type:'post',
-         url:"/shouhuo/public/admin/account/getVertication",
+         url:"/admin/account/getVertication",
          data:formData,
          contentType: false,
          processData: false,

@@ -70,4 +70,18 @@ class Scan extends Controller
         return exit($result);
     }
 
+     /**
+     * 发送异常签收评价.
+     */
+    public function sendRemark(){
+        $pk =trim(input('post.pk'));
+        $userCode =trim(input('post.userCode'));
+        $remark = trim(input('post.remark'));
+        $request = new HttpRequestUtil();
+        $post_data = array("entrustVbillno"=>$pk,"userCode"=>$userCode,"memo"=>$remark);
+        $result = $request->httpJsonPost(TMS_SERVER_URL . "order/abnormalReceipt",json_encode($post_data));
+        return exit($result);
+    }
+
+
 }
