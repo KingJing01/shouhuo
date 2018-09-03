@@ -73,7 +73,7 @@ class Scan extends Controller
      /**
      * 发送异常签收评价.
      */
-    public function sendRemark(){
+    public function sendExpRemark(){
         $pk =trim(input('post.pk'));
         $userCode =trim(input('post.userCode'));
         $remark = trim(input('post.remark'));
