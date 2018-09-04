@@ -128,11 +128,6 @@
         </div>
     </div>
 </div>
-<!--<div id="toast" >
-    <div class="weui-toast">
-        <p class="weui-toast__content toast_content"></p>
-    </div>
-</div>-->
 <script type="text/javascript">
     var _getWechatSignUrl = '/admin/scan/getJsapiTicket';
     // 获取微信签名 将url当参数传入到后台
@@ -273,7 +268,6 @@
                     $("#weui-picker-confirm").attr("flag", false);
                     $("#sign_success_mark").hide();
                     $("#sign_success_show").show();
-
                 } else {
                     $(".toast_content").html(resp.message);
                     $("#container_grade").hide();
@@ -292,7 +286,8 @@
         $.post("/admin/scan/sendExpRemark", {
             'remark': remark,
             'pk': sessionStorage.getItem("pk"),
-            'userCode': localStorage.getItem("userCode")
+            'userCode': localStorage.getItem("userCode"),
+            'expType':sessionStorage.getItem("commentExp")
         }, function (resp) {
             if (resp.success == 1) {
                 $("#sign_exp_mark").hide();
@@ -331,7 +326,7 @@
     }
 
     //按钮的样式切换
-    $(".raty_button button").each(function (index) {
+    $("#raty_button_success button").each(function (index) {
         $(this).click(function () {
             var classType = $(this).attr("class");
             var textArea = sessionStorage.getItem("comment");
@@ -347,6 +342,21 @@
                 $("#comment_textarea").val("评分为" + ratyGrade + "颗星  " + sessionStorage.getItem("comment"));
             }
         })
+
+        //按钮的样式切换
+        $("#raty_button_exp button").each(function (index) {
+            $(this).click(function () {
+                var classType = $(this).attr("class");
+                var textArea = sessionStorage.getItem("commentExp");
+                var data = $(this).html();
+                if (classType.indexOf("weui-btn_default") != -1) {
+                    $(this).attr("class", "weui-btn weui-btn_mini weui-btn_primary");
+                    sessionStorage.setItem("commentExp", textArea ? (textArea + "  " + data) : data);
+                } else {
+                    $(this).attr("class", "weui-btn weui-btn_mini weui-btn_default");
+                    sessionStorage.setItem("commentExp", textArea.replace(data, "").trim());
+                }
+            })
     })
     $("#scan_div").click(function () {
         scanCode();
