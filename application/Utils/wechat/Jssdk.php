@@ -66,7 +66,6 @@ class Jssdk
         } else {
             $ticket = $data->jsapi_ticket;
         }
-
         return $ticket;
     }
 
