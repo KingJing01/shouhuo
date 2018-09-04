@@ -105,8 +105,8 @@
                         <div class="weui-cells weui-cells_form">
                             <div class="weui-cell">
                                 <div class="weui-cell__bd">
-                                <textarea class="weui-textarea" id="comment_textarea_exp" placeholder=""
-                                          rows="8"></textarea>
+                                <textarea class="weui-textarea" id="comment_textarea_exp" placeholder="" style="border: 1px;"
+                                          rows="7"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -211,15 +211,17 @@
             $("#weui-picker-confirm").attr("flag", true);
             $("#comment_textarea").val("");
             $(".toast_content").html("");
+            sessionStorage.setItem("comment", "");
             initRaty();
         } else {
             $("#comment_textarea_exp").val("");
+            sessionStorage.setItem("commentExp", "");
         }
         $(".container").hide();
         $(".raty_button button").each(function (index) {
             $(this).attr("class", "weui-btn weui-btn_mini weui-btn_default");
         });
-        sessionStorage.setItem("comment", "");
+
     }
 
     /* 签收接口*/
