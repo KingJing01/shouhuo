@@ -12,13 +12,12 @@ class Account extends Controller
 {
     public function login()
     {
-        //返回模板名  view.Account下的login.html
         return $this->fetch("login");
     }
 
     public function welcome()
     {
-        //返回模板名  view.Account下的login.html
+        //返回模板名  view/account/welcome.html
         return $this->fetch("welcome");
     }
 
