@@ -171,18 +171,18 @@
         data.pk = "af4683e48b884aa89abff91188c11617";
         data.userCode = "18049808631";
         sessionStorage.setItem("pk", data.pk);
-        sessionStorage.setItem("username", data.userCode);
+        localStorage.setItem("username", data.userCode);
         getBarCodeData(data.pk);
     }
 
     // 根据二维码扫描结果查询数据
-    function getBarCodeData(data) {
+    function getBarCodeData(pk) {
         $.post("/admin/scan/getCodeData", {
-            pk: data,
-            userCode: $.cookie("userCode")
+            pk: pk,
+            userCode: localStorage.getItem("userCode")
         }, function (res) {
             //存放pk时进行判断
-            sessionStorage.setItem("pk", data);
+            sessionStorage.setItem("pk", pk);
             var str = "";
             $("#container_host").html(str);
             var list = res.list;
@@ -228,7 +228,7 @@
         /* showPanel();*/
         $.post("/admin/scan/sign", {
             'pk': sessionStorage.getItem("pk"),
-            'userCode': $.cookie("userCode")
+            'userCode': localStorage.getItem("userCode")
         }, function (resp) {
             var data = JSON.parse(resp);
             if (data.success == 1) {
@@ -263,7 +263,7 @@
             $.post("/admin/scan/sendRemark", {
                 'remark': remark,
                 'pk': sessionStorage.getItem("pk"),
-                'userCode': $.cookie("userCode"),
+                'userCode': localStorage.getItem("userCode"),
                 'average': average
             }, function (resp) {
                 if (resp.success == 1) {
