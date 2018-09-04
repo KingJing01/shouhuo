@@ -64,6 +64,7 @@
         }, function (res) {
             if (res.success == 1) {
                 $.cookie("userCode", username, {expires: 1});
+                localStorage.setItem("userCode",username);
                 window.location.href = "/admin/scan/scanEntry";
             } else {
                 $("#alert_info").html(res.message);
