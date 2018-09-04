@@ -2,8 +2,6 @@
 
 namespace app\Utils\wechat;
 
-use app\Utils\request\HttpRequestUtil;
-
 
 class Jssdk
 {
@@ -48,6 +46,55 @@ class Jssdk
 
     private function getJsApiTicket()
     {
+        $fileName = trim((WECHAT_PATH . "jsapi_ticket.json"));
+        if(!file_exists($fileName)){
+           $file = fopen($fileName,"x+");
+           fclose($file);
+        }
+        $data = json_decode(file_get_contents($fileName));
+        // jsapi_ticket 应该全局存储与更新   写入到文件中
+        if ($data == null || $data->expire_time < time()) {
+            $accessToken = $this->getAccessToken();
+            $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
+            $res = json_decode($this->httpGet($url));
+            $ticket = $res->ticket;
+            if ($ticket) {
+                $data = array("expire_time" => time() + 7000, "jsapi_ticket" => $ticket);
+                $this->set_php_file(WECHAT_PATH . "jsapi_ticket.json", json_encode($data));
+            }
+        } else {
+            $ticket = $data->jsapi_ticket;
+        }
+
+        return $ticket;
+    }
+
+    private function getAccessToken()
+    {
+        $fileName = trim((WECHAT_PATH . "access_token.json"));
+        if(!file_exists($fileName)){
+            $file = fopen($fileName,"x+");
+            fclose($file);
+        }
+        $data = json_decode(file_get_contents($fileName));
+        // access_token 应该全局存储与更新，以下代码以写入到文件中
+        //$data = json_decode(file_get_contents(trim((WECHAT_PATH . "access_token.json"))));
+        if ($data == null || $data->expire_time < time()) {
+            $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
+            $res = json_decode($this->httpGet($url));
+            $access_token = $res->access_token;
+            if ($access_token) {
+                $data = array("expire_time" => time() + 7000, "access_token" => $access_token);
+                $this->set_php_file(WECHAT_PATH . "access_token.json", json_encode($data));
+            }
+        } else {
+            $access_token = $data->access_token;
+        }
+        return $access_token;
+    }
+
+    /*private function getJsApiTicket()
+    {
         // jsapi_ticket 应该全局存储与更新   写入到文件中
         $data = json_decode($this->get_php_file(WECHAT_PATH . "jsapi_ticket.php"));
         if ($data->expire_time < time()) {
@@ -84,7 +131,7 @@ class Jssdk
             $access_token = $data->access_token;
         }
         return $access_token;
-    }
+    }*/
     //基于curl的Get请求.
     private function httpGet($url)
     {
@@ -100,15 +147,10 @@ class Jssdk
         return $res;
     }
 
-    private function get_php_file($filename)
-    {
-        return trim(substr(file_get_contents($filename), 15));
-    }
-
     private function set_php_file($filename, $content)
     {
-        $fp = fopen($filename, "w");
-        fwrite($fp, "<?php exit();?>" . $content);
+        $fp = fopen($filename, "w+");
+        fwrite($fp, $content);
         fclose($fp);
     }
 }
