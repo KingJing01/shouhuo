@@ -268,8 +268,9 @@
             }, function (resp) {
                 if (resp.success == 1) {
                     $("#weui-picker-confirm").attr("flag", false);
-                    $("#sign_exp_mark").hide();
-                    $("#sign_exp_show").show();
+                    $("#sign_success_mark").hide();
+                    $("#sign_success_show").show();
+
                 } else {
                     $(".toast_content").html(resp.message);
                     $("#container_grade").hide();
@@ -291,8 +292,8 @@
             'userCode': localStorage.getItem("userCode")
         }, function (resp) {
             if (resp.success == 1) {
-                $("#sign_success_mark").hide();
-                $("#sign_success_show").show();
+                $("#sign_exp_mark").hide();
+                $("#sign_exp_show").show();
             } else {
                 toastShow(resp.message);
                 $("#container_grade_exp").hide();
@@ -306,7 +307,9 @@
     function signException() {
         $("#container_grade_exp").show();
     }
-
+    function closeDialog() {
+        $('#iosDialog').hide();
+    }
     //评分插件初始化
     function initRaty() {
         $('#star').raty({
