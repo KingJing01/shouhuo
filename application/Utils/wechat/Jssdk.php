@@ -1,6 +1,7 @@
 <?php
 
 namespace app\Utils\wechat;
+use think\Log;
 
 
 class Jssdk
@@ -19,12 +20,9 @@ class Jssdk
         $jsapiTicket = $this->getJsApiTicket();
         $timestamp = time();
         $nonceStr = $this->createNonceStr();
-
         // 这里参数的顺序要按照 key 值 ASCII 码升序排序
         $string = "jsapi_ticket=$jsapiTicket&noncestr=$nonceStr&timestamp=$timestamp&url=$url";
-
         $signature = sha1($string);
-
         $signPackage = array(
             "appId" => $this->appId,
             "nonceStr" => $nonceStr,
@@ -53,8 +51,8 @@ class Jssdk
         }
         $data = json_decode(file_get_contents($fileName));
         if ($data == null || $data->expire_time < time()) {
-            $accessToken = $this->getAccessToken();
-            $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token="+$accessToken;
+            $token = $this->getAccessToken();
+            $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$token";
             $res = json_decode($this->httpGet($url));
             $ticket = $res->ticket;
             if ($ticket) {
@@ -75,8 +73,6 @@ class Jssdk
             fclose($file);
         }
         $data = json_decode(file_get_contents($fileName));
-        // access_token 应该全局存储与更新，以下代码以写入到文件中
-        //$data = json_decode(file_get_contents(trim((WECHAT_PATH . "access_token.json"))));
         if ($data == null || $data->expire_time < time()) {
             $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
             $res = json_decode($this->httpGet($url));
@@ -130,6 +126,7 @@ class Jssdk
         }
         return $access_token;
     }*/
+
     //基于curl的Get请求.
     private function httpGet($url)
     {
