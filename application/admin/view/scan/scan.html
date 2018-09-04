@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/style.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/application.css">
     <script type="text/javascript" src="__STATIC__/plugins/jquery.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/plugins/jquery.cookie.js"></script>
     <script type="text/javascript" src="__STATIC__/plugins/windownFont.js"></script>
     <script type="text/javascript" src="__STATIC__/plugins/raty/jquery.raty.js"></script>
     <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
@@ -130,7 +131,6 @@
     $.post(_getWechatSignUrl, {
         'url': location.href.split('#')[0]
     }, function (o) {
-        alert(JSON.stringify(o));
         wxConfig(o.appId, o.timestamp, o.nonceStr, o.signature);
     }, 'json');
 
@@ -173,7 +173,7 @@
     function getBarCodeData(data) {
         $.post("/admin/scan/getCodeData", {
             pk: data,
-            userCode: sessionStorage.getItem("username")
+            userCode: $.cookie("userCode")
         }, function (res) {
             //存放pk时进行判断
             sessionStorage.setItem("pk", data);
@@ -221,7 +221,7 @@
        /* showPanel();*/
        $.post("/admin/scan/sign", {
             'pk': sessionStorage.getItem("pk"),
-            'userCode': sessionStorage.getItem("username")
+            'userCode': $.cookie("userCode")
         }, function (resp) {
            var data = JSON.parse(resp);
            if (data.success == 1) {
@@ -240,7 +240,7 @@
         $.post("/admin/scan/sendRemark", {
             'remark': remark,
             'pk': sessionStorage.getItem("pk"),
-            'userCode': sessionStorage.getItem("username"),
+            'userCode': $.cookie("userCode"),
             'average':average
         }, function (resp) {
            if (resp.success == 1) {
@@ -271,7 +271,7 @@
         $.post("/admin/scan/sendExpRemark", {
             'remark': remark,
             'pk': sessionStorage.getItem("pk"),
-            'userCode': sessionStorage.getItem("username"),
+            'userCode': $.cookie("userCode")
         }, function (resp) {
            if (resp.success == 1) {
                 $("#sign_success_mark").hide();
