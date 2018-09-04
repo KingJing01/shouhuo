@@ -46,17 +46,15 @@ class Jssdk
 
     private function getJsApiTicket()
     {
-
         $fileName = trim((WECHAT_PATH . "jsapi_ticket.json"));
         if(!file_exists($fileName)){
            $file = fopen($fileName,"x+");
            fclose($file);
         }
         $data = json_decode(file_get_contents($fileName));
-        // jsapi_ticket 应该全局存储与更新   写入到文件中
         if ($data == null || $data->expire_time < time()) {
             $accessToken = $this->getAccessToken();
-            $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
+            $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token="+$accessToken;
             $res = json_decode($this->httpGet($url));
             $ticket = $res->ticket;
             if ($ticket) {
