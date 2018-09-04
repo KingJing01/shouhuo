@@ -46,7 +46,7 @@ class Jssdk
 
     private function getJsApiTicket()
     {
-        $ticket = null;
+
         $fileName = trim((WECHAT_PATH . "jsapi_ticket.json"));
         if(!file_exists($fileName)){
            $file = fopen($fileName,"x+");
@@ -71,7 +71,6 @@ class Jssdk
 
     private function getAccessToken()
     {
-        $access_token = null;
         $fileName = trim((WECHAT_PATH . "access_token.json"));
         if(!file_exists($fileName)){
             $file = fopen($fileName,"x+");
