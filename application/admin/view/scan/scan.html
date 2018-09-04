@@ -130,6 +130,7 @@
     $.post(_getWechatSignUrl, {
         'url': location.href.split('#')[0]
     }, function (o) {
+        alert(JSON.stringify(o));
         wxConfig(o.appId, o.timestamp, o.nonceStr, o.signature);
     }, 'json');
 
