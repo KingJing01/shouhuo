@@ -25,7 +25,7 @@
 <!-- scan good list start -->
 <div class="sm_out_div" style="height: 8rem;background-color: white" id="container_panel" hidden>
     <div class="goods_list">货品列表</div>
-    <div id="conatiner" class="container">
+    <div id="conatiner" class="container_host">
         <!-- <div class="sm_panel"><div class="sm_cell"><div class="sm_cell_img"><span class="fa fa-table fa-lg"></span></div><div class="sm_cell_text"><p>汽油&nbsp;&nbsp;&nbsp;&nbsp;<span class="sm_cell_span">(石油、天然气及制品)</span></p>
     </div></div><div class="sm_cell"><div class="sm_cell_img"><span class="fa fa-list fa-lg"></div><div class="sm_cell_text"><p>1件/60000.0000千克/60.00立方米</p></div></div></div> -->
     </div>
@@ -117,14 +117,20 @@
         </div>
     </div>
 </div>
-
-<div id="toast" style="display: none;">
-    <div class="weui-mask_transparent"></div>
-    <div class="weui-toast">
-      <!--  <i class="weui-icon-success-no-circle weui-icon_toast"></i>-->
-        <p class="weui-toast__content toast_content"></p>
+<div class="js_dialog" id="iosDialog" style="display: none;">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog">
+        <div class="weui-dialog__bd"><span id="alert_info" class="toast_content"></span></div>
+        <div class="weui-dialog__ft">
+            <a href="javascript:closeDialog()" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+        </div>
     </div>
 </div>
+<!--<div id="toast" >
+    <div class="weui-toast">
+        <p class="weui-toast__content toast_content"></p>
+    </div>
+</div>-->
 <script type="text/javascript">
     var _getWechatSignUrl = '/admin/scan/getJsapiTicket';
     // 获取微信签名 将url当参数传入到后台
@@ -178,7 +184,7 @@
             //存放pk时进行判断
             sessionStorage.setItem("pk", data);
             var str = "";
-            $("#conatiner").html(str);
+            $("#container_host").html(str);
             var list = res.list;
             if (list.length > 0) {
                 for (i in list) {
@@ -228,22 +234,26 @@
             if (data.success == 1) {
                 showPanel();
             } else if (data.success == 0) {
-                toastShow(data.message);
-                window.location.href = "/admin/account/login";
+                toastShow(data.message, false);
             } else {
                 toastShow(data.message);
             }
         })
     }
-    function  toastShow(data) {
-        var $toast = $('#toast');
+
+    function toastShow(data, flag) {
+        var $toast = $('#iosDialog');
         if ($toast.css('display') != 'none') return;
         $toast.fadeIn(100);
-        setTimeout(function () {
-            $toast.fadeOut(100);
-        }, 2000);
         $(".toast_content").html(data);
+        if (flag == false) {
+            setTimeout(function () {
+                $toast.hide();
+                window.location.href = "/admin/account/login";
+            }, 3000);
+        }
     }
+
     /*正常收货评价*/
     function sendComment() {
         var flag = $("#weui-picker-confirm").attr("flag");
@@ -287,6 +297,8 @@
                 toastShow(resp.message);
                 $("#container_grade_exp").hide();
             }
+            $("#comment_textarea_exp").val();
+            sessionStorage.setItem("comment", "");
         }, 'json');
     }
 
