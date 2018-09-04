@@ -57,8 +57,7 @@
             $("#iosDialog2").show();
             return;
         }
-        $.post('/admin/account/dologin', {
-            'username': username,
+        $.post('/admin/account/dologin', {            'username': username,
             'pwd': pwd,
         }, function (res) {
            if (res.success == 1) {

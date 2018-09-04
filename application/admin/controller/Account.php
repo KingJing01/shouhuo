@@ -16,6 +16,12 @@ class Account extends Controller
         return $this->fetch("login");
     }
 
+    public function welcome()
+    {
+        //返回模板名  view.Account下的login.html
+        return $this->fetch("welcome");
+    }
+
     //用户登录
     public function dologin()
     {
