@@ -268,12 +268,13 @@
                 'userCode': localStorage.getItem("userCode"),
                 'average': average
             }, function (resp) {
-                if (resp.success == 1) {
+                var data = JSON.parse(resp);
+                if (data.success == 1) {
                     $("#weui-picker-confirm").attr("flag", false);
                     $("#sign_success_mark").hide();
                     $("#sign_success_show").show();
                 } else {
-                    toastShow(resp.message);
+                    toastShow(data.message);
                     $("#container_grade").hide();
                 }
             }, 'json');
