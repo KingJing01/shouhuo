@@ -207,6 +207,7 @@
 
     //弹出层关闭面板
     function closePanel(flag) {
+        /*判断是异常签收还是正常签收*/
         if (flag == true) {
             $("#weui-picker-confirm").attr("flag", true);
             $("#comment_textarea").val("");
@@ -226,7 +227,6 @@
 
     /* 签收接口*/
     function signGoods() {
-        /* showPanel();*/
         $.post("/admin/scan/sign", {
             'pk': sessionStorage.getItem("pk"),
             'userCode': localStorage.getItem("userCode")
@@ -259,7 +259,7 @@
     /*正常收货评价*/
     function sendComment() {
         var flag = $("#weui-picker-confirm").attr("flag");
-        if (flag) {
+        if (flag==true) {
             var remark = $("#comment_textarea").val();
             var average = $('#star').raty('getScore');
             $.post("/admin/scan/sendRemark", {
@@ -273,7 +273,7 @@
                     $("#sign_success_mark").hide();
                     $("#sign_success_show").show();
                 } else {
-                    $(".toast_content").html(resp.message);
+                    toastShow(resp.message);
                     $("#container_grade").hide();
                 }
             }, 'json');
@@ -301,7 +301,7 @@
                 $("#container_grade_exp").hide();
             }
             $("#comment_textarea_exp").val();
-            sessionStorage.setItem("comment", "");
+            sessionStorage.setItem("commentExp", "");
         }, 'json');
     }
 
