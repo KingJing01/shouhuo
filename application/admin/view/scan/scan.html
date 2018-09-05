@@ -15,8 +15,8 @@
 <body id="sm_body">
 <!-- scan page start -->
 <div class="sm_out_div" id="sm_scan_div">
-    <p id="scan_p" onclick="test()">扫一扫</p>
-    <!--<p id="scan_p">扫一扫</p>-->
+   <!--  <p id="scan_p" onclick="test()">扫一扫</p> -->
+    <p id="scan_p">扫一扫</p>
     <h2>查看货物清单</h2>
     <img src="__STATIC__/images/picture.png" id="scan_img" onclick="scanCode()">
     <div id="scan_div"></div>
@@ -38,7 +38,7 @@
 </div>
 <!-- scan good list end -->
 <!-- 弹出层 签收-->
-<div id="container_grade" class="container" hidden>
+<div id="container_grade" class="container" >
     <div class="weui-mask weui-animate-fade-in"></div>
     <div class="weui-picker weui-animate-slide-up">
         <div class="weui-picker__hd_success">
@@ -49,7 +49,7 @@
                                          id="weui-picker-confirm">确定</a></div>
 
         </div>
-        <div id="sign_success_mark">
+        <div id="sign_success_mark" hidden>
             <!-- raty -->
             <div id="raty_container">
                 <div id="star"></div>
@@ -78,7 +78,7 @@
                 </div>
             </div>
         </div>
-        <div id="sign_success_show" style="height: 8rem" hidden>
+        <div id="sign_success_show" style="height: 8rem" >
             <img src="__STATIC__/images/mark_success.png" class="mark_img">
             <p class="mark_text">感谢您的评价!</p>
         </div>
@@ -167,8 +167,8 @@
 
     function test() {
         var data = {};
-        data.pk = "e2565593a06f4b589cda7bc150137db3";
-        data.userCode = "15001962939";
+        data.pk = "9abb70ff22a84688997de2460c46b022";
+        data.userCode = "13162095658";
         sessionStorage.setItem("pk", data.pk);
         localStorage.setItem("userCode", data.userCode);
         getBarCodeData(data.pk);
@@ -212,8 +212,8 @@
     //弹出层关闭面板
     function closePanel(flag) {
         /*判断是异常签收还是正常签收*/
-        if (flag == true) {
-            $("#weui-picker-confirm").attr("flag", true);
+        if (flag == "true") {
+            $("#weui-picker-confirm").attr("flag", "true");
             $("#comment_textarea").val("");
             $(".toast_content").html("");
             sessionStorage.setItem("comment", "");
@@ -263,7 +263,7 @@
     /*正常收货评价*/
     function sendComment() {
         var flag = $("#weui-picker-confirm").attr("flag");
-        if (flag==true) {
+        if (flag=="true") {
             var remark = $("#comment_textarea").val();
             var average = $('#star').raty('getScore');
             $.post("/admin/scan/sendRemark", {
@@ -272,13 +272,12 @@
                 'userCode': localStorage.getItem("userCode"),
                 'average': average
             }, function (resp) {
-                var data = JSON.parse(resp);
-                if (data.success == 1) {
-                    $("#weui-picker-confirm").attr("flag", false);
+                if (resp.success == 1) {
+                    $("#weui-picker-confirm").attr("flag", "false");
                     $("#sign_success_mark").hide();
                     $("#sign_success_show").show();
                 } else {
-                    toastShow(data.message);
+                    toastShow(resp.message);
                     $("#container_grade").hide();
                 }
             }, 'json');
