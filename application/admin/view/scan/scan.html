@@ -188,7 +188,7 @@
             if (list.length > 0) {
                 for (i in list) {
                     str += "<div class=\"sm_panel\"><div class=\"sm_cell\"><div class=\"sm_cell_img\"><img src=\"__STATIC__/images/icon.png\" class=\"sm_img\"></div><div class=\"sm_cell_text\"><p>" + list[i].goodsName + "&nbsp;&nbsp;&nbsp;&nbsp;<span class='sm_cell_span'>(" + list[i].goodsCode + ")</span>" + "</p>\n</div></div>" +
-                        "<div class=\"sm_cell\"><div class=\"sm_cell_img\"><img src=\"__STATIC__/images/icon1.png\" class=\"sm_img\"></div><div class=\"sm_cell_text\"><p>" + list[i].num + "件/" + list[i].weight + list[i].volumeUnit + "/" + list[i].volume + list[i].weightUnit + "</p></div></div></div>"
+                        "<div class=\"sm_cell\"><div class=\"sm_cell_img\"><img src=\"__STATIC__/images/icon1.png\" class=\"sm_img\"></div><div class=\"sm_cell_text\"><p>" + list[i].num*1 + "件/" + list[i].weight*1 + list[i].volumeUnit + "/" + list[i].volume*1 + list[i].weightUnit + "</p></div></div></div>"
                 }
                 $("#sm_scan_div").hide();
                 $("#container_panel").show();
