@@ -16,7 +16,7 @@
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">手机号</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" id="username" type="number" name="username" placeholder=""/>
+                <input class="weui-input" id="username" type="number" name="username" placeholder="" onchange="validmobile(this.value)" />
             </div>
         </div>
         <div class="weui-cell">
@@ -98,6 +98,14 @@
             }
         })
 
+    }
+
+    function validmobile(value){
+        if(value && value.length>11){
+            $("#alert_info").html("手机号码长度最长11位");
+            $("#iosDialog2").show();
+            return ; 
+        }
     }
 
     //60s 倒计时

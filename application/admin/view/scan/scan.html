@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>签收</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
@@ -12,366 +13,430 @@
     <script type="text/javascript" src="__STATIC__/plugins/raty/jquery.raty.js"></script>
     <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 </head>
+
 <body id="sm_body">
-<!-- scan page start -->
-<div class="sm_out_div" id="sm_scan_div">
-   <!--  <p id="scan_p" onclick="test()">扫一扫</p> -->
-    <p id="scan_p" onclick="test()">扫一扫</p>
-    <h2>查看货物清单</h2>
-    <img src="__STATIC__/images/picture.png" id="scan_img" onclick="scanCode()">
-    <div id="scan_div"></div>
-</div>
-<!-- scan page end -->
-<!-- scan good list start -->
-<div class="sm_out_div" style="height: 8rem;background-color: white;position: relative" id="container_panel" hidden>
-    <div class="goods_list">货品列表</div>
-    <div id="container_host">
-        <!-- <div class="sm_panel"><div class="sm_cell"><div class="sm_cell_img"><span class="fa fa-table fa-lg"></span></div><div class="sm_cell_text"><p>汽油&nbsp;&nbsp;&nbsp;&nbsp;<span class="sm_cell_span">(石油、天然气及制品)</span></p>
+    <!-- scan page start -->
+    <div class="sm_out_div" id="sm_scan_div">
+        <p id="scan_p" onclick="test()">扫一扫</p>
+        <!-- <p id="scan_p">扫一扫</p> -->
+        <h2>查看货物清单</h2>
+        <img src="__STATIC__/images/picture.png" id="scan_img">
+        <div id="scan_div"></div>
+    </div>
+    <!-- scan page end -->
+    <!-- scan good list start -->
+    <div class="sm_out_div" style="height: 8rem;background-color: white;position: relative" id="container_panel" hidden>
+        <div class="goods_list">货品列表</div>
+        <div id="container_host">
+            <!-- <div class="sm_panel"><div class="sm_cell"><div class="sm_cell_img"><span class="fa fa-table fa-lg"></span></div><div class="sm_cell_text"><p>汽油&nbsp;&nbsp;&nbsp;&nbsp;<span class="sm_cell_span">(石油、天然气及制品)</span></p>
     </div></div><div class="sm_cell"><div class="sm_cell_img"><span class="fa fa-list fa-lg"></div><div class="sm_cell_text"><p>1件/60000.0000千克/60.00立方米</p></div></div></div> -->
-    </div>
-    <div id="comment_div">
-        <a href="javascript:signGoods()" class="sm_btn btn_comment">确认签收</a>
-        <a href="javascript:signException()" class="sm_btn btn_scan">异常签收</a>
-        <div style="clear: both"></div>
-    </div>
-    <img src="__STATIC__/images/picture_car.png" id="car_img" onclick="return false">
+        </div>
+        <div id="comment_div">
+            <a href="javascript:signGoods()" class="sm_btn btn_comment">确认签收</a>
+            <a href="javascript:signException()" class="sm_btn btn_scan">异常签收</a>
+            <div style="clear: both"></div>
+        </div>
+        <img src="__STATIC__/images/picture_car.png" id="car_img" onclick="return false">
 </div>
-<!-- scan good list end -->
-<!-- 弹出层 签收-->
-<div id="container_grade" class="container" hidden>
-    <div class="weui-mask weui-animate-fade-in"></div>
-    <div class="weui-picker weui-animate-slide-up">
-        <div class="weui-picker__hd_success">
-            <div style="float: left;"><a href="javascript:closePanel(true);" data-action="cancel"
+        <!-- scan good list end -->
+        <!-- 弹出层 签收-->
+        <div id="container_grade" class="container" hidden>
+            <div class="weui-mask weui-animate-fade-in"></div>
+            <div class="weui-picker weui-animate-slide-up">
+                <div class="weui-picker__hd_success">
+                    <div style="float: left;"><a href="javascript:closePanel(true);" data-action="cancel"
                                          class="weui-picker__action">取消</a></div>
-            <div style="float: right"><a href="javascript:sendComment();" data-action="select"
+                    <div style="float: right"><a href="javascript:sendComment();" data-action="select"
                                          class="weui-picker__action a_sure" flag="true"
                                          id="weui-picker-confirm">确定</a></div>
-
-        </div>
-        <div id="sign_success_mark">
-            <!-- raty -->
-            <div id="raty_container">
-                <div id="star"></div>
-            </div>
-            <div id="raty_button_success" class="raty_button">
-                <button class="weui-btn weui-btn_mini weui-btn_default">送货及时</button>
-                <button class="weui-btn weui-btn_mini weui-btn_default">货物完好</button>
-                <button class="weui-btn weui-btn_mini weui-btn_default">提醒到位</button>
-                <button class="weui-btn weui-btn_mini weui-btn_default">司机人好</button>
-                <button class="weui-btn weui-btn_mini weui-btn_default">及时提醒</button>
-                <button class="weui-btn weui-btn_mini weui-btn_default">部分货品损坏</button>
-                <button class="weui-btn weui-btn_mini weui-btn_default">储存方式好</button>
-            </div>
-            <div class="weui-picker__bd">
-                <div class="weui-picker__group">
-                    <div class="weui-picker__mask">
-                        <div class="weui-cells weui-cells_form">
-                            <div class="weui-cell">
-                                <div class="weui-cell__bd">
-                                <textarea class="weui-textarea" id="comment_textarea" placeholder=""
-                                          rows="8"></textarea>
+                </div>
+                <div id="sign_success_mark">
+                    <!-- raty -->
+                    <div id="raty_container">
+                        <div id="star"></div>
+                    </div>
+                    <div id="raty_button_success" class="raty_button">
+                        <button class="weui-btn weui-btn_mini weui-btn_default">送货及时</button>
+                        <button class="weui-btn weui-btn_mini weui-btn_default">货物完好</button>
+                        <button class="weui-btn weui-btn_mini weui-btn_default">提醒到位</button>
+                        <button class="weui-btn weui-btn_mini weui-btn_default">司机人好</button>
+                        <button class="weui-btn weui-btn_mini weui-btn_default">及时提醒</button>
+                        <button class="weui-btn weui-btn_mini weui-btn_default">部分货品损坏</button>
+                        <button class="weui-btn weui-btn_mini weui-btn_default">储存方式好</button>
+                    </div>
+                    <div class="weui-picker__bd">
+                        <div class="weui-picker__group">
+                            <div class="weui-picker__mask">
+                                <div class="weui-cells weui-cells_form">
+                                    <div class="weui-cell">
+                                        <div class="weui-cell__bd">
+                                            <textarea class="weui-textarea" id="comment_textarea" placeholder="" style="border: 1px solid rgba(0,0,0,.2);" rows="6"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div id="sign_success_show" style="height: 8rem" hidden>
+                    <img src="__STATIC__/images/mark_success.png" class="mark_img">
+                    <p class="mark_text">感谢您的评价!</p>
+                </div>
             </div>
         </div>
-        <div id="sign_success_show" style="height: 8rem" hidden>
-            <img src="__STATIC__/images/mark_success.png" class="mark_img">
-            <p class="mark_text">感谢您的评价!</p>
-        </div>
-    </div>
-</div>
-<!-- 异常签收 -->
-<div id="container_grade_exp" class="container" hidden>
-    <div class="weui-mask weui-animate-fade-in"></div>
-    <div class="weui-picker weui-animate-slide-up">
-        <div class="weui-picker__hd">
-            <a href="javascript:closePanel(false);" data-action="cancel" class="weui-picker__action">取消</a>
-            <a href="javascript:sendExpComment();" data-action="select" class="weui-picker__action a_sure"
+        <!-- 异常签收 -->
+        <div id="container_grade_exp" class="container" hidden>
+            <div class="weui-mask weui-animate-fade-in"></div>
+            <div class="weui-picker weui-animate-slide-up">
+                <div class="weui-picker__hd">
+                    <a href="javascript:closePanel(false);" data-action="cancel" class="weui-picker__action">取消</a>
+                    <a href="javascript:sendExpComment();" data-action="select" class="weui-picker__action a_sure"
                id="weui-picker-confirm-exp">确定</a>
-        </div>
-        <div id="sign_exp_mark">
-            <div id="raty_button_exp" class="raty_button">
-                <button class="weui-btn weui-btn_mini weui-btn_default">货物丢失</button>
-                <button class="weui-btn weui-btn_mini weui-btn_default">货物破损</button>
-                <button class="weui-btn weui-btn_mini weui-btn_default">货品错误</button>
-            </div>
-            <div class="weui-picker__bd">
-                <div class="weui-picker__group">
-                    <div class="weui-picker__mask">
-                        <div class="weui-cells weui-cells_form">
-                            <div class="weui-cell">
-                                <div class="weui-cell__bd">
-                                <textarea class="weui-textarea" id="comment_textarea_exp" placeholder="" style="border: 1px;"
-                                          rows="7"></textarea>
+                </div>
+                <div id="sign_exp_mark">
+                    <div id="raty_button_exp" class="raty_button">
+                        <button class="weui-btn weui-btn_mini weui-btn_default">货物丢失</button>
+                        <button class="weui-btn weui-btn_mini weui-btn_default">货物破损</button>
+                        <button class="weui-btn weui-btn_mini weui-btn_default">货品错误</button>
+                    </div>
+                    <div class="weui-picker__bd">
+                        <div class="weui-picker__group">
+                            <div class="weui-picker__mask">
+                                <div class="weui-cells_form">
+                                    <div class="weui-cell">
+                                        <div class="weui-cell__bd">
+                                            <textarea class="weui-textarea" id="comment_textarea_exp" placeholder="其他情况如实填写,将会有客服人员联系您核实信息" style="border: 1px solid rgba(0,0,0,.2);" rows="4"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                     <img src="__STATIC__/images/add_picture.png" id="img_temp">
+                                    <img src="__STATIC__/images/add_picture.png" class="photo_img">
+
+                        </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div id="sign_exp_show" style="height: 8rem" hidden>
+                        <img src="__STATIC__/images/picture-letter.png" class="mark_img">
+                        <p class="mark_text">感谢您的反馈!</p>
+                        <p style="margin-left:1.3rem;color: #999"></p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="sign_exp_show" style="height: 8rem" hidden>
-            <img src="__STATIC__/images/picture-letter.png" class="mark_img">
-            <p class="mark_text">感谢您的反馈!</p>
-            <p style="margin-left:1.3rem;color: #999">稍后将会有客服人员联系您核实信息，请保持手机畅通</p>
-        </div>
-    </div>
-</div>
-<div class="js_dialog" id="iosDialog" style="display: none;">
-    <div class="weui-mask"></div>
-    <div class="weui-dialog">
-        <div class="weui-dialog__bd"><span id="alert_info" class="toast_content"></span></div>
-        <div class="weui-dialog__ft">
-            <a href="javascript:closeDialog()" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
-        </div>
-    </div>
-</div>
-<script type="text/javascript">
-    var _getWechatSignUrl = '/admin/scan/getJsapiTicket';
-    // 获取微信签名 将url当参数传入到后台
-    $.post(_getWechatSignUrl, {
-        'url': location.href.split('#')[0]
-    }, function (o) {
-        wxConfig(o.appId, o.timestamp, o.nonceStr, o.signature);
-    }, 'json');
+            <div class="js_dialog" id="iosDialog" style="display: none;">
+                <div class="weui-mask"></div>
+                <div class="weui-dialog">
+                    <div class="weui-dialog__bd"><span id="alert_info" class="toast_content"></span></div>
+                    <div class="weui-dialog__ft">
+                        <a href="javascript:closeDialog()" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+            var _getWechatSignUrl = '/admin/scan/getJsapiTicket';
+            // 获取微信签名 将url当参数传入到后台
+            $.post(_getWechatSignUrl, {
+                'url': location.href.split('#')[0]
+            }, function(o) {
+                wxConfig(o.appId, o.timestamp, o.nonceStr, o.signature);
+            }, 'json');
 
-    function wxConfig(_appId, _timestamp, _nonceStr, _signature) {
-        wx.config({
-            debug: false,//true 调试模式 返回信息  上线使用false
-            appId: _appId,
-            timestamp: _timestamp,
-            nonceStr: _nonceStr,
-            signature: _signature,
-            jsApiList: ['scanQRCode']
-        });
-    }
-
-    function scanCode() {
-        wx.scanQRCode({
-            needResult: 1,
-            scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-            success: function (res) {
-                var data = JSON.parse(res.resultStr);
-                if (data.type == '1') {
-                    getBarCodeData(data.pk);
-                } else {
-                    $(".toast_content").html("请扫描正确的货码");
-                }
+            function wxConfig(_appId, _timestamp, _nonceStr, _signature) {
+                wx.config({
+                    debug: false, //true 调试模式 返回信息  上线使用false
+                    appId: _appId,
+                    timestamp: _timestamp,
+                    nonceStr: _nonceStr,
+                    signature: _signature,
+                    jsApiList: ['scanQRCode', 'chooseImage', 'uploadImage', 'getLocalImgData', 'downloadImage']
+                });
             }
-        });
-    }
 
-    function test() {
-        var data = {};
-        data.pk = "9abb70ff22a84688997de2460c46b022";
-        data.userCode = "13162095658";
-        sessionStorage.setItem("pk", data.pk);
-        localStorage.setItem("userCode", data.userCode);
-        getBarCodeData(data.pk);
-    }
-
-    // 根据二维码扫描结果查询数据
-    function getBarCodeData(pk) {
-        $.post("/admin/scan/getCodeData", {
-            pk: pk,
-            userCode: localStorage.getItem("userCode")
-        }, function (res) {
-            if (res.success == 1) {
-                //存放pk时进行判断
-                sessionStorage.setItem("pk", pk);
-                var str = "";
-                $("#container_host").html(str);
-                var list = res.list;
-                if (list.length > 0) {
-                    for (i in list) {
-                        str += "<div class=\"sm_panel\"><div class=\"sm_cell\"><div class=\"sm_cell_img\"><img src=\"__STATIC__/images/icon.png\" class=\"sm_img\"></div><div class=\"sm_cell_text\"><p>" + list[i].goodsName + "&nbsp;&nbsp;&nbsp;&nbsp;<span class='sm_cell_span'>(" + list[i].goodsCode + ")</span>" + "</p>\n</div></div>" +
-                            "<div class=\"sm_cell\"><div class=\"sm_cell_img\"><img src=\"__STATIC__/images/icon1.png\" class=\"sm_img\"></div><div class=\"sm_cell_text\"><p>" + list[i].num*1 + "件/" + list[i].weight*1 + list[i].weightUnit  + "/" + list[i].volume*1 + list[i].volumeUnit + "</p></div></div></div>"
+            function scanCode() {
+                wx.scanQRCode({
+                    needResult: 1,
+                    scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                    success: function(res) {
+                        var data = JSON.parse(res.resultStr);
+                        if (data.type == '1') {
+                            $("#comment_div .sm_btn").attr("disabled", false);
+                            getBarCodeData(data.pk);
+                        } else {
+                            $(".toast_content").html("请扫描正确的货码");
+                        }
                     }
-                    $("#sm_scan_div").hide();
-                    $("#container_panel").show();
-                    $("#container_host").html(str);
+                });
+            }
+
+            function test() {
+                var data = {};
+                data.pk = "9abb70ff22a84688997de2460c46b022";
+                data.userCode = "13162095658";
+                sessionStorage.setItem("pk", data.pk);
+                localStorage.setItem("userCode", data.userCode);
+                $("#comment_div .sm_btn").attr("disabled", false);
+                getBarCodeData(data.pk);
+            }
+
+            // 根据二维码扫描结果查询数据
+            function getBarCodeData(pk) {
+                $.post("/admin/scan/getCodeData", {
+                    pk: pk,
+                    userCode: localStorage.getItem("userCode")
+                }, function(res) {
+                    if (res.success == 1) {
+                        //存放pk时进行判断
+                        sessionStorage.setItem("pk", pk);
+                        var str = "";
+                        $("#container_host").html(str);
+                        var list = res.list;
+                        if (list.length > 0) {
+                            for (i in list) {
+                                str += "<div class=\"sm_panel\"><div class=\"sm_cell\"><div class=\"sm_cell_img\"><img src=\"__STATIC__/images/icon.png\" class=\"sm_img\"></div><div class=\"sm_cell_text\"><p>" + list[i].goodsName + "&nbsp;&nbsp;&nbsp;&nbsp;<span class='sm_cell_span'>(" + list[i].goodsCode + ")</span>" + "</p>\n</div></div>" +
+                                    "<div class=\"sm_cell\"><div class=\"sm_cell_img\"><img src=\"__STATIC__/images/icon1.png\" class=\"sm_img\"></div><div class=\"sm_cell_text\"><p>" + list[i].num * 1 + "件/" + list[i].weight * 1 + list[i].weightUnit + "/" + list[i].volume * 1 + list[i].volumeUnit + "</p></div></div></div>"
+                            }
+                            $("#sm_scan_div").hide();
+                            $("#container_panel").show();
+                            $("#container_host").html(str);
+                        } else {
+                            $("#container_panel").hide();
+                        }
+                    } else if (res.success == 0) {
+                        toastShow(res.message, false);
+                    }
+                }, 'json');
+            }
+            /*调取微信接口获取 */
+            function getLocalImageData(image) {
+                wx.getLocalImgData({
+                    localId: image, // 图片的localID
+                    success: function(res) {
+                        var localData = res.localData; // localData是图片的base64数据，可以用img标签显示
+                        $("#img_temp").attr("src",localData);
+                       // return localData;
+                    }
+                });
+            }
+            /* 上传图片到服务器 */
+            function uploadImgaeToServer(image) {
+               var fileData = getLocalImageData(image);
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/scan/uploadImages",
+                    data: JSON.stringify({
+                        type: "normalImg",
+                        file: fileData.substr(23)
+                    }),
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    timeout: 30000,
+                    success: function(resp) {
+
+                    }
+                });
+            }
+
+            function wxchooseimage() {
+                wx.chooseImage({
+                    count: 1, // 默认9
+                    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                    success: function(res) {
+                        var localIds = res.localIds; // 返回选定照片的本地ID列表
+                        getLocalImageData(localIds);
+                      /*  alert("localIds="+localIds);
+                        var imageid = localIds.split(",");
+                        alert("imageid="+imageid);
+                        for (var i = imageid.length - 1; i >= 0; i--) {
+                            //var image = imageid[i].split("/")[1];
+                            //uploadImgaeToServer(image);
+                            getLocalImageData(imageid[i]);
+                        }*/
+                    }
+                });
+
+            }
+
+            //弹出层展示面板
+            function showPanel() {
+                initRaty();
+                $("#container_grade").show();
+            }
+
+            //弹出层关闭面板
+            function closePanel(flag) {
+                /*判断是异常签收还是正常签收*/
+                if (flag == true) {
+                    $("#weui-picker-confirm").attr("flag", "true");
+                    $("#comment_textarea").val("");
+                    $(".toast_content").html("");
+                    sessionStorage.setItem("comment", "");
+                    initRaty();
                 } else {
-                    $("#container_panel").hide();
+                    $("#comment_textarea_exp").val("");
+                    sessionStorage.setItem("commentExp", "");
                 }
-            } else if (res.success == 0) {
-                toastShow(res.message, false);
+                $(".container").hide();
+                $(".raty_button button").each(function(index) {
+                    $(this).attr("class", "weui-btn weui-btn_mini weui-btn_default");
+                });
+
             }
-        }, 'json');
-    }
 
-    //弹出层展示面板
-    function showPanel() {
-        initRaty();
-        $("#container_grade").show();
-    }
+            /* 签收接口*/
+            function signGoods() {
+                $.post("/admin/scan/sign", {
+                    'pk': sessionStorage.getItem("pk"),
+                    'userCode': localStorage.getItem("userCode")
+                }, function(resp) {
 
-    //弹出层关闭面板
-    function closePanel(flag) {
-        /*判断是异常签收还是正常签收*/
-        if (flag == "true") {
-            $("#weui-picker-confirm").attr("flag", "true");
-            $("#comment_textarea").val("");
-            $(".toast_content").html("");
-            sessionStorage.setItem("comment", "");
-            initRaty();
-        } else {
-            $("#comment_textarea_exp").val("");
-            sessionStorage.setItem("commentExp", "");
-        }
-        $(".container").hide();
-        $(".raty_button button").each(function (index) {
-            $(this).attr("class", "weui-btn weui-btn_mini weui-btn_default");
-        });
-
-    }
-
-    /* 签收接口*/
-    function signGoods() {
-        $.post("/admin/scan/sign", {
-            'pk': sessionStorage.getItem("pk"),
-            'userCode': localStorage.getItem("userCode")
-        }, function (resp) {
-            var data = JSON.parse(resp);
-            if (data.success == 1) {
-                showPanel();
-            } else if (data.success == 0) {
-                toastShow(data.message, false);
-            } else {
-                toastShow(data.message);
+                    /*showPanel();*/
+                    var data = JSON.parse(resp);
+                    if (data.success == 1) {
+                        showPanel();
+                    } else if (data.success == 0) {
+                        toastShow(data.message, false);
+                    } else {
+                        toastShow(data.message);
+                    }
+                })
             }
-        })
-    }
 
-    function toastShow(data, flag) {
-        var $toast = $('#iosDialog');
-        if ($toast.css('display') != 'none') return;
-        $toast.fadeIn(100);
-        $(".toast_content").html(data);
-        if (flag == false) {
-            setTimeout(function () {
-                $toast.hide();
-                localStorage.setItem("userCode", "");
-                window.location.href = "/admin/account/login";
-            }, 2000);
-        }
-    }
+            function toastShow(data, flag) {
+                var $toast = $('#iosDialog');
+                if ($toast.css('display') != 'none') return;
+                $toast.fadeIn(100);
+                $(".toast_content").html(data);
+                if (flag == false) {
+                    setTimeout(function() {
+                        $toast.hide();
+                        localStorage.setItem("userCode", "");
+                        window.location.href = "/admin/account/login";
+                    }, 2000);
+                }
+            }
 
-    /*正常收货评价*/
-    function sendComment() {
-        var flag = $("#weui-picker-confirm").attr("flag");
-        if (flag=="true") {
-            var remark = $("#comment_textarea").val();
-            var average = $('#star').raty('getScore');
-            $.post("/admin/scan/sendRemark", {
-                'remark': remark,
-                'pk': sessionStorage.getItem("pk"),
-                'userCode': localStorage.getItem("userCode"),
-                'average': average
-            }, function (resp) {
-                if (resp.success == 1) {
-                    $("#weui-picker-confirm").attr("flag", "false");
-                    $("#sign_success_mark").hide();
-                    $("#sign_success_show").show();
+            /*正常收货评价*/
+            function sendComment() {
+                var flag = $("#weui-picker-confirm").attr("flag");
+                if (flag == "true") {
+                    var remark = $("#comment_textarea").val();
+                    var average = $('#star').raty('getScore');
+                    $.post("/admin/scan/sendRemark", {
+                        'remark': remark,
+                        'pk': sessionStorage.getItem("pk"),
+                        'userCode': localStorage.getItem("userCode"),
+                        'average': average
+                    }, function(resp) {
+                        if (resp.success == 1) {
+                            $("#weui-picker-confirm").attr("flag", "false");
+                            /*评价成功 再次评价禁用*/
+                            $("#comment_div .sm_btn").attr("disabled", true).css("pointer-events", "none");
+                            $("#sign_success_mark").hide();
+                            $("#sign_success_show").show();
+                        } else {
+                            toastShow(resp.message);
+                            $("#container_grade").hide();
+                        }
+                    }, 'json');
                 } else {
-                    toastShow(resp.message);
                     $("#container_grade").hide();
                 }
-            }, 'json');
-        } else {
-            $("#container_grade").hide();
-        }
-        $("#comment_textarea").val();
-        sessionStorage.setItem("comment", "");
-    };
+                $("#comment_textarea").val();
+                sessionStorage.setItem("comment", "");
+            };
 
-    /*异常签收的评价*/
-    function sendExpComment() {
-        var remark = $("#comment_textarea_exp").val();
-        $.post("/admin/scan/sendExpRemark", {
-            'remark': remark,
-            'pk': sessionStorage.getItem("pk"),
-            'userCode': localStorage.getItem("userCode"),
-            'expType': sessionStorage.getItem("commentExp")
-        }, function (resp) {
-            if (resp.success == 1) {
-                $("#sign_exp_mark").hide();
-                $("#sign_exp_show").show();
-            } else {
-                toastShow(resp.message);
-                $("#container_grade_exp").hide();
+            /*异常签收的评价*/
+            function sendExpComment() {
+                var remark = $("#comment_textarea_exp").val();
+                $.post("/admin/scan/sendExpRemark", {
+                    'remark': remark,
+                    'pk': sessionStorage.getItem("pk"),
+                    'userCode': localStorage.getItem("userCode"),
+                    'expType': sessionStorage.getItem("commentExp")
+                }, function(resp) {
+                    if (resp.success == 1) {
+                        $("#sign_exp_mark").hide();
+                        $("#sign_exp_show").show();
+                    } else {
+                        toastShow(resp.message);
+                        $("#container_grade_exp").hide();
+                    }
+                    $("#comment_textarea_exp").val();
+                    sessionStorage.setItem("commentExp", "");
+                }, 'json');
             }
-            $("#comment_textarea_exp").val();
-            sessionStorage.setItem("commentExp", "");
-        }, 'json');
-    }
 
-    //异常签收
-    function signException() {
-        $("#container_grade_exp").show();
-    }
-
-    function closeDialog() {
-        $('#iosDialog').hide();
-    }
-
-    //评分插件初始化
-    function initRaty() {
-        $('#star').raty({
-            path: "/static/images/",
-            size: 40,
-            score: 5,
-            starHalf: 'star-half-big.png',
-            starOff: 'star-off-big.png',
-            starOn: 'star-on-big.png',
-            click: function (score, evt) {
-                sessionStorage.setItem("raty", score);
-                $("#comment_textarea").val("评分为" + score + "颗星   " + (sessionStorage.getItem("comment") == null ? "" : sessionStorage.getItem("comment")));
+            //异常签收
+            function signException() {
+                $("#container_grade_exp").show();
             }
-        });
-        sessionStorage.setItem("raty", 5);
-    }
 
-    //按钮的样式切换
-    $("#raty_button_success button").each(function (index) {
-        $(this).click(function () {
-            var classType = $(this).attr("class");
-            var textArea = sessionStorage.getItem("comment");
-            var ratyGrade = sessionStorage.getItem("raty");
-            var data = $(this).html();
-            if (classType.indexOf("weui-btn_default") != -1) {
-                $(this).attr("class", "weui-btn weui-btn_mini weui-btn_primary");
-                sessionStorage.setItem("comment", textArea ? (textArea + "  " + data) : data);
-                $("#comment_textarea").val("评分为" + ratyGrade + "颗星    " + sessionStorage.getItem("comment"));
-            } else {
-                $(this).attr("class", "weui-btn weui-btn_mini weui-btn_default");
-                sessionStorage.setItem("comment", textArea.replace(data, "").trim());
-                $("#comment_textarea").val("评分为" + ratyGrade + "颗星  " + sessionStorage.getItem("comment"));
+            function closeDialog() {
+                $('#iosDialog').hide();
             }
-        })
-    })
 
-    //按钮的样式切换
-    $("#raty_button_exp button").each(function (index) {
-        $(this).click(function () {
-            var classType = $(this).attr("class");
-            var textArea = sessionStorage.getItem("commentExp");
-            var data = $(this).html();
-            if (classType.indexOf("weui-btn_default") != -1) {
-                $(this).attr("class", "weui-btn weui-btn_mini weui-btn_primary");
-                sessionStorage.setItem("commentExp", textArea ? (textArea + "  " + data) : data);
-            } else {
-                $(this).attr("class", "weui-btn weui-btn_mini weui-btn_default");
-                sessionStorage.setItem("commentExp", textArea.replace(data, "").trim());
+            //评分插件初始化
+            function initRaty() {
+                $('#star').raty({
+                    path: "/static/images/",
+                    size: 40,
+                    score: 5,
+                    starHalf: 'star-half-big.png',
+                    starOff: 'star-off-big.png',
+                    starOn: 'star-on-big.png',
+                    click: function(score, evt) {
+                        sessionStorage.setItem("raty", score);
+                        $("#comment_textarea").val("评分为" + score + "颗星   " + (sessionStorage.getItem("comment") == null ? "" : sessionStorage.getItem("comment")));
+                    }
+                });
+                sessionStorage.setItem("raty", 5);
             }
-        })
-    })
-    $("#scan_div").click(function () {
-        scanCode();
-    })
-</script>
+
+            //按钮的样式切换
+            $("#raty_button_success button").each(function(index) {
+                $(this).click(function() {
+                    var classType = $(this).attr("class");
+                    var textArea = sessionStorage.getItem("comment");
+                    var ratyGrade = sessionStorage.getItem("raty");
+                    var data = $(this).html();
+                    if (classType.indexOf("weui-btn_default") != -1) {
+                        $(this).attr("class", "weui-btn weui-btn_mini weui-btn_primary");
+                        sessionStorage.setItem("comment", textArea ? (textArea + "  " + data) : data);
+                        $("#comment_textarea").val("评分为" + ratyGrade + "颗星    " + sessionStorage.getItem("comment"));
+                    } else {
+                        $(this).attr("class", "weui-btn weui-btn_mini weui-btn_default");
+                        sessionStorage.setItem("comment", textArea.replace(data, "").trim());
+                        $("#comment_textarea").val("评分为" + ratyGrade + "颗星  " + sessionStorage.getItem("comment"));
+                    }
+                })
+            })
+
+            //按钮的样式切换
+            $("#raty_button_exp button").each(function(index) {
+                $(this).click(function() {
+                    var classType = $(this).attr("class");
+                    var textArea = sessionStorage.getItem("commentExp");
+                    var data = $(this).html();
+                    if (classType.indexOf("weui-btn_default") != -1) {
+                        $(this).attr("class", "weui-btn weui-btn_mini weui-btn_primary");
+                        sessionStorage.setItem("commentExp", textArea ? (textArea + "  " + data) : data);
+                    } else {
+                        $(this).attr("class", "weui-btn weui-btn_mini weui-btn_default");
+                        sessionStorage.setItem("commentExp", textArea.replace(data, "").trim());
+                    }
+                })
+            })
+            $("#scan_div").click(function() {
+                scanCode();
+            })
+            /* 异常签收 添加图片的操作 */
+            $(".photo_img").click(function() {
+                wxchooseimage();
+            })
+            </script>
 </body>
+
 </html>
