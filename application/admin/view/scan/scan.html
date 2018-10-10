@@ -114,9 +114,7 @@
                         </div>
                         <div>
                             <div id="add_img_contain">
-                                <!--
-                                 <div class="one_pic_contain"> <img src="__STATIC__/images/close.png" class="close_img"><img src="__STATIC__/images/test.jpg" class="img_show"></div>
-                                 <div class="one_pic_contain"> <img src="__STATIC__/images/close.png" class="close_img"><img src="__STATIC__/images/test.jpg" class="img_show"></div> -->
+                                <!--<div class="one_pic_contain"> <img src="__STATIC__/images/close.png" class="close_img"><img src="__STATIC__/images/test.jpg" class="img_show"></div>-->
                             </div>
                             <img src="__STATIC__/images/add_picture.png" id="photo_img">
                         </div>
@@ -249,10 +247,11 @@
             success: function (res) {
                 var localIds = res.localIds; // 返回选定照片的本地ID列表
                 console.log("localIds=  " + localIds);
-                var imageid = localIds.split(",");
-                for (var i = imageid.length - 1; i >= 0; i--) {
-                    console.log("imageid=" + imageid[i]);
-                    getLocalImageData(imageid[i]);
+                var imageArr = localIds.split(",");
+                console.log("imageArr =  " + imageArr);
+                for (var i = 0; i < imageArr.length; i++) {
+                    console.log("image=" + imageArr[i]);
+                    getLocalImageData(imageArr[i]);
                 }
             }
         });
