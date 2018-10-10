@@ -218,6 +218,7 @@
         wx.getLocalImgData({
             localId: image, // 图片的localID
             success: function (res) {
+
                 uploadImgaeToServer(res.localData);
             }
         });
@@ -226,14 +227,15 @@
     /* 上传图片到服务器 */
     function uploadImgaeToServer(image) {
         $.post('/admin/scan/uploadImages', {
-            'type': "normalImg",
-            'file': image
+            type: "normalImg",
+            file: image
         }, function (res) {
             console.log(new Date().getTime() + "  " + JSON.stringify(res));
             if (res.success == 1) {
+                var path = resp.path;
                 var length = $("#add_img_contain > .one_pic_contain ").length;
                 if (length == 3) $("#photo_img").hide();
-                var htmlStr = "<div class='one_pic_contain'> <img src='" + resp.url + "' class='close_img'><img src='__STATIC__/images/test.jpg' class='img_show'></div>";
+                var htmlStr = "<div class='one_pic_contain'> <img src='" + "data:image/jpg;base64,"+image + "' class='close_img'><img src='__STATIC__/images/test.jpg' class='img_show'></div>";
                 $("#add_img_contain").append(htmlStr);
             }
         }, 'json');
@@ -245,9 +247,7 @@
             sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
             sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
             success: function (res) {
-                var localIds = res.localIds; // 返回选定照片的本地ID列表
-                console.log("localIds=  " + localIds);
-                var imageArr = localIds.split(",");
+                var imageArr = res.localIds; // 返回选定照片的本地ID列表
                 console.log("imageArr =  " + imageArr);
                 for (var i = 0; i < imageArr.length; i++) {
                     console.log("image=" + imageArr[i]);

@@ -40,6 +40,7 @@ class Account extends Controller
         $arr = array("userCode" => $username, "checkCode" => $pwd);
         $request = new HttpRequestUtil();
         $res = $request->httpJsonPost(TMS_SERVER_URL . 'weChatLogin', json_encode($arr));
+
         return exit($res);
     }
 
