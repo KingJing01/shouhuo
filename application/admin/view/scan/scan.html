@@ -237,7 +237,7 @@
             if (res.success == 1) {
                 var length = $("#add_img_contain > .one_pic_contain ").length;
                 if (length == 3) $("#photo_img").hide();
-                var htmlStr = "<div class='one_pic_contain'> <img src='__STATIC__/images/test.jpg' class='close_img'><img src='" + "data:image/jpg;base64,"+image + "'  class='img_show'></div>";
+                var htmlStr = "<div class='one_pic_contain'> <img src='__STATIC__/images/close.jpg' class='close_img'><img src='" + "data:image/jpg;base64,"+image + "'  class='img_show'></div>";
                 $("#add_img_contain").append(htmlStr);
             }
         }, 'json');
