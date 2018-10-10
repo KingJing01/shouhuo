@@ -88,6 +88,7 @@ class Scan extends Controller
         $file = trim(input('post.file'));
         $type = trim(input('post.type'));
         $post_data = array("file"=>$file,"type"=>$type);
+        $request = new HttpRequestUtil();
         $result = $request->httpJsonPost(TMS_SERVER_URL . "/uploadFile",json_encode($post_data));
         return exit($result);
     }
