@@ -115,7 +115,7 @@
                         <div>
                             <div id="add_img_contain">
                             </div>
-                            <img src="__STATIC__/images/add_picture.png" id="photo_img" >
+                            <img src="__STATIC__/images/add_picture.png" id="photo_img">
                         </div>
                     </div>
                 </div>
@@ -217,6 +217,7 @@
         wx.getLocalImgData({
             localId: image, // 图片的localID
             success: function (res) {
+                console.log("获取的图片Base64信息：" + res.localData);
                 uploadImgaeToServer(res.localData);
             }
         });
@@ -354,7 +355,7 @@
 
     /*异常签收的评价*/
     function sendExpComment() {
-        var abnormalPicture="";
+        var abnormalPicture = "";
         $("#add_img_contain .close_img").each(function (index) {
             abnormalPicture += $(this).attr("data") + ",";
         })
@@ -364,7 +365,7 @@
             'pk': sessionStorage.getItem("pk"),
             'userCode': localStorage.getItem("userCode"),
             'expType': sessionStorage.getItem("commentExp"),
-            'abnormalPicture':abnormalPicture
+            'abnormalPicture': abnormalPicture
         }, function (resp) {
             if (resp.success == 1) {
                 $("#sign_exp_mark").hide();
