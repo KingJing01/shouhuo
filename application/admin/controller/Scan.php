@@ -77,8 +77,8 @@ class Scan extends Controller
         $pk =trim(input('post.pk'));
         $userCode =trim(input('post.userCode'));
         $remark = trim(input('post.remark'));
-        $expType = trim(input('post.expType'));
-        $abnormalPicture = trim(input('post.abnormalPicture'));
+        $expType = rawurldecode($_POST['expType']);
+        $abnormalPicture = rawurldecode($_POST['abnormalPicture']);
         $request = new HttpRequestUtil();
         $post_data = array("pkEntrust"=>$pk,"userCode"=>$userCode,"memo"=>$remark,"expType"=>$expType,"abnormalPicture"=>$abnormalPicture);
         $result = $request->httpJsonPost(TMS_SERVER_URL . "order/abnormalReceipt",json_encode($post_data));
