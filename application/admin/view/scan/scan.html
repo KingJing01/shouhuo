@@ -114,12 +114,13 @@
                         </div>
                         <div>
                             <div id="add_img_contain">
-                              <!--  <div class="one_pic_contain"><img src="__STATIC__/images/close.png"
-                                                                  class="close_img"><img
-                                        src="__STATIC__/images/test.jpg" class="img_show"></div>-->
+                                <!--  <div class="one_pic_contain"><img src="__STATIC__/images/close.png"
+                                                                    class="close_img"><img
+                                          src="__STATIC__/images/test.jpg" class="img_show"></div>-->
                             </div>
                             <img src="__STATIC__/images/add_picture.png" id="photo_img">
                         </div>
+                        <p id="image_error" hidden>最多只能上传4张图片</p>
                     </div>
                 </div>
             </div>
@@ -220,7 +221,6 @@
         wx.getLocalImgData({
             localId: image, // 图片的localID
             success: function (res) {
-                console.log("获取的图片Base64信息：" + res.localData);
                 uploadImgaeToServer(res.localData);
             }
         });
@@ -255,7 +255,13 @@
             sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
             sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
             success: function (res) {
+                var length = $("#add_img_contain > .one_pic_contain ").length;
                 var imageArr = res.localIds; // 返回选定照片的本地ID列表
+                console.log("已有图片"+length+"张   此次选择了"+imageArr.length)
+                if((length+imageArr.length)>4) {
+                    $("#image_error").show();
+                    return false;
+                }
                 for (var i = 0; i < imageArr.length; i++) {
                     getLocalImageData(imageArr[i]);
                 }
@@ -443,6 +449,7 @@
     })
     /* 异常签收 添加图片的操作 */
     $("#photo_img").click(function () {
+        $("#image_error").hide();
         wxchooseimage();
     })
 </script>
