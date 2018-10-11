@@ -128,9 +128,9 @@
                                         src="__STATIC__/images/test.jpg" class="img_show"></div>
                             </div>
                             <img src="__STATIC__/images/add_picture.png" id="photo_img" hidden>
-                           <!-- <div id="add_img_contain">
-                            </div>
-                            <img src="__STATIC__/images/add_picture.png" id="photo_img">-->
+                            <!-- <div id="add_img_contain">
+                             </div>
+                             <img src="__STATIC__/images/add_picture.png" id="photo_img">-->
                         </div>
                     </div>
                 </div>
@@ -255,12 +255,10 @@
     }
 
     //异常签收 图片删除点击事件
-    $("#add_img_contain .close_img").each(function (index) {
-        $(this).click(function () {
-            $(this).parent().remove();
-            var length = $("#add_img_contain > .one_pic_contain ").length;
-            if (length < 4) $("#photo_img").show();
-        })
+    $("#add_img_contain").on('click', ".close_img", function () {
+        $(this).parent().remove();
+        var length = $("#add_img_contain > .one_pic_contain ").length;
+        if (length < 4) $("#photo_img").show();
     })
 
     function wxchooseimage() {
