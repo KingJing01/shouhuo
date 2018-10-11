@@ -218,8 +218,6 @@
         wx.getLocalImgData({
             localId: image, // 图片的localID
             success: function (res) {
-                console.log("----------------------------------------图片未转义的内容-------------------------");
-                console.log(res.localData);
                 uploadImgaeToServer(res.localData);
             }
         });
@@ -227,14 +225,13 @@
 
     /* 上传图片到服务器 */
     function uploadImgaeToServer(image) {
-
         $.post('/admin/scan/uploadImages', {
             "type": "normalImg",
-            //file:"test"
             "file": image
         }, function (res) {
             console.log(new Date().getTime() + "  " + JSON.stringify(res));
             if (res.success == 1) {
+                var path = res.path;
                 var length = $("#add_img_contain > .one_pic_contain ").length;
                 if (length == 3) $("#photo_img").hide();
                 var htmlStr = "<div class='one_pic_contain'> <img src='__STATIC__/images/close.png' class='close_img'><img src='" + "data:image/jpg;base64,"+image + "'  class='img_show'></div>";
@@ -252,7 +249,6 @@
                 var imageArr = res.localIds; // 返回选定照片的本地ID列表
                 console.log("imageArr =  " + imageArr);
                 for (var i = 0; i < imageArr.length; i++) {
-                    console.log("image=" + imageArr[i]);
                     getLocalImageData(imageArr[i]);
                 }
             }
@@ -276,6 +272,7 @@
             sessionStorage.setItem("comment", "");
             initRaty();
         } else {
+            $("#add_img_contain").html("");
             $("#comment_textarea_exp").val("");
             sessionStorage.setItem("commentExp", "");
         }
