@@ -88,7 +88,7 @@ class Scan extends Controller
     public function uploadImages() {
         $file = $_POST['file'];
         $type = $_POST['type'];
-        $post_data = array("file"=>urldecode($file),"type"=>$type);
+        $post_data = array("file"=>rawurldecode($file),"type"=>$type);
         $request = new HttpRequestUtil();
         $result = $request->httpJsonPost(TMS_SERVER_URL . "/uploadFile",json_encode($post_data));
         return exit($result);
