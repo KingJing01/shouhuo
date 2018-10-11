@@ -229,7 +229,6 @@
             "type": "normalImg",
             "file": image
         }, function (res) {
-            console.log(new Date().getTime() + "  " + JSON.stringify(res));
             if (res.success == 1) {
                 var path = res.path;
                 var length = $("#add_img_contain > .one_pic_contain ").length;
